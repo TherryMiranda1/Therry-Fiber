@@ -72,3 +72,7 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.screen ::-webkit-scrollbar {
+  width: 0;
+}
