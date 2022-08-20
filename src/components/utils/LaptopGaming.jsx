@@ -17,6 +17,7 @@ export function LaptopGaming(active,GOLDENRATIO, ...props) {
       meshLaptop.current.rotation.y += 0.002;
     }
   });
+  useFrame((state, delta) => (meshLaptop.current.rotation.y += 0.01));
   return (
     <group ref={meshLaptop} {...props}  position={[0, 0.02, 0]} scale={0.3} rotation={[ 0, Math.PI / 0.3, Math.PI / 0.05]} dispose={null}>
       <group name="Scene">

@@ -13,12 +13,16 @@ const Switch = (props) => {
         className="react-switch-checkbox"
       />
       <label
-        style={{ background: props.isOn && props.onColor }}
+        style={{position:'absolute', zIndex:2, background: props.isOn && props.onColor, margin: '5px'  }}
         className="react-switch-label"
         htmlFor={"react-switch-new"}
       >
         <span className={"react-switch-button"}>
-          {props.isOn ? <FaSun className="h-10 w-10 m-2" style={{color:props.onColor}} />  : <FaMoon className="h-10 w-10 m-2" style={{color:props.onOff}} />}
+          {props.isOn ? (
+            <FaSun className="h-5 w-6 m-1" style={{ color: props.onColor }} />
+          ) : (
+            <FaMoon className="h-5 w-6 m-1" style={{ color: props.onOff }} />
+          )}
         </span>
       </label>
     </>

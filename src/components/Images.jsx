@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import {
   useCursor,
@@ -7,10 +7,13 @@ import {
   Image,
   Text,
   Environment,
+  OrbitControls,
 } from "@react-three/drei";
 import { useRoute, useLocation } from "wouter";
 import getUuid from "uuid-by-string";
 import { LaptopGaming } from "./utils/LaptopGaming";
+import { Phone } from "./utils/Phone";
+import { Rack } from "./utils/Rack";
 
 const colors = {
   black: {
@@ -55,7 +58,10 @@ export default function Images({ images, value }) {
           />
           <Environment preset="city" />
           <group position={[0, -0.5, 0]}>
-            <Frames images={images} setContent={setContent} />
+            <Suspense fallback={null}>
+              <Frames images={images} setContent={setContent} />
+            </Suspense>
+
             <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
               <planeGeometry args={[50, 100]} />
               <MeshReflectorMaterial
@@ -75,8 +81,8 @@ export default function Images({ images, value }) {
         </Canvas>
       </div>
       <div className="mt-8   w-screen h-1/2 z-10">
-        <text className=" flex text-lg">{content.title}</text>
-        <text>{content.description}</text>
+        <h1 className=" flex text-lg">{content.title}</h1>
+        <h3>{content.description}</h3>
       </div>
     </div>
   );
@@ -111,6 +117,7 @@ function Frames({
     <group
       ref={ref}
       onClick={(e) => (
+        console.log(e),
         e.stopPropagation(),
         setLocation(
           clicked.current === e.object ? "/" : "/item/" + e.object.name
@@ -156,19 +163,6 @@ function Frame({
   });
   return (
     <group {...props}>
-      <group
-        scale={0.7}
-        position={[0.4, GOLDENRATIO / 3, 0]}
-      >
-        <group
-          scale={[0.95, 0.95, 0.95]}
-          position={[0, 0, 0.2]}
-        >
-          {content === "Frontend" ? (
-            <LaptopGaming GOLDENRATIO={GOLDENRATIO} />
-          ) : null}
-        </group>
-      </group>
       <mesh
         name={name}
         onPointerOver={(e) => (e.stopPropagation(), hover(true))}
@@ -193,23 +187,36 @@ function Frame({
           <boxGeometry />
           <meshBasicMaterial toneMapped={false} fog={false} />
         </mesh>
-        <Image
-          raycast={() => null}
-          ref={image}
-          position={[0, 0, 0.7]}
-          url={url}
-        />
+        <Suspense>
+          <Image
+            raycast={() => null}
+            ref={image}
+            position={[0, 0, 0.7]}
+            url={url}
+          />
+        </Suspense>
       </mesh>
-
-      <Text
-        maxWidth={0.1}
-        anchorX="left"
-        anchorY="top"
-        position={[0.55, GOLDENRATIO, 0]}
-        fontSize={0.025}
-      >
-        {content}
-      </Text>
+      <Suspense fallback={null}>
+        <group scale={0.7} position={[0.4, GOLDENRATIO / 3, 0]}>
+          <group scale={[0.95, 0.95, 0.95]} position={[0, 0, 0.2]}>
+            {content === "Frontend" ? (
+              <Suspense fallback={null}>
+                <LaptopGaming name={name} GOLDENRATIO={GOLDENRATIO} />
+              </Suspense>
+            ) : null}
+            <Suspense fallback={null}>
+              {content === "Mobile" ? (
+                <Phone name={name} GOLDENRATIO={GOLDENRATIO} />
+              ) : null}
+            </Suspense>
+            <Suspense fallback={null}>
+              {content === "Backend" ? (
+                <Rack name={name} GOLDENRATIO={GOLDENRATIO} />
+              ) : null}
+            </Suspense>
+          </group>
+        </group>
+      </Suspense>
     </group>
   );
 }
