@@ -6,7 +6,7 @@ import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 
-export function LaptopGaming(active, ...props) {
+export function LaptopGaming(active,GOLDENRATIO, ...props) {
   const { nodes, materials } = useGLTF("/LaptopGaming3.glb");
 
   const meshLaptop = useRef();
@@ -18,7 +18,7 @@ export function LaptopGaming(active, ...props) {
     }
   });
   return (
-    <group ref={meshLaptop} {...props}  position={[0, 4, 0]} rotation={[ 0, Math.PI / 0.7, Math.PI / 14.7]} dispose={null}>
+    <group ref={meshLaptop} {...props}  position={[0, 0.02, 0]} scale={0.3} rotation={[ 0, Math.PI / 0.3, Math.PI / 0.05]} dispose={null}>
       <group name="Scene">
         <group
           name="Cube001"

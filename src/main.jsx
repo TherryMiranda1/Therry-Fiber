@@ -11,8 +11,9 @@ const images = [
     position: [0, 0, 1.5],
     rotation: [0, 0, 0],
     url: pexel(3786092),
-    content: "Imagen 1",
+    content: "Backend",
     description: "Coche negro",
+
   },
   // Back
   // { position: [-0.8, 0, -0.6], rotation: [0, 0, 0], url: pexel(416430) },
@@ -22,7 +23,7 @@ const images = [
     position: [-1.65, 0, 0.25],
     rotation: [0, Math.PI / 2.7, 0],
     url: pexel(2365701),
-    content: "Imagen 2",
+    content: "Frontend",
     description: "Tren",
   },
   // { position: [-2.15, 0, 1.5], rotation: [0, Math.PI / 2.5, 0], url: pexel(325185) },
@@ -30,7 +31,7 @@ const images = [
     position: [-1.9, 0, 2.75],
     rotation: [0, Math.PI / 2.8, 0],
     url: pexel(1887792),
-    content: "Imagen 3",
+    content: "Mobile",
     description: "Sombrilla y lluvia",
   },
   // Right
@@ -38,7 +39,7 @@ const images = [
     position: [1.65, 0, 0.25],
     rotation: [0, -Math.PI / 2.7, 0],
     url: pexel(240526),
-    content: "Imagen 4",
+    content: "Learning",
     description: "playa",
   },
   // { position: [2.15, 0, 1.5], rotation: [0, -Math.PI / 2.5, 0], url: pexel(911738) },
@@ -46,7 +47,7 @@ const images = [
     position: [1.9, 0, 2.75],
     rotation: [0, -Math.PI / 2.8, 0],
     url: pexel(1738986),
-    content: "Imagen 5",
+    content: "Next Steps",
     description: "vacio",
   },
 ];

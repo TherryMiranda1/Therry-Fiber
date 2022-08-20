@@ -10,47 +10,71 @@ import {
 } from "@react-three/drei";
 import { useRoute, useLocation } from "wouter";
 import getUuid from "uuid-by-string";
+import { LaptopGaming } from "./utils/LaptopGaming";
 
-const GOLDENRATIO = 1.61803398875;
+const colors = {
+  black: {
+    background: "#191920",
+    fog: "#191920",
+    reflector: "#101010",
+    font: "white",
+  },
+  white: {
+    background: "#e3dede",
+    fog: "#e3dede",
+    reflector: "#8c8888",
+    font: "black",
+  },
+};
 
-export default function Images({ images }) {
+const GOLDENRATIO = 1.2;
+
+export default function Images({ images, value }) {
   const [content, setContent] = useState({ title: "", description: "" });
 
   return (
-    <div className="bg-black w-screen h-screen">
-      <div className="bg-black w-screen h-1/2 ">
-        <text>Pictures</text>
-
+    <div
+      className="w-screen h-screen"
+      style={{
+        background: value ? colors.white.background : colors.black.background,
+      }}
+    >
+      <div className="bg- w-screen h-1/2 ">
         <Canvas
           gl={{ alpha: false }}
           dpr={[1, 1.5]}
           camera={{ fov: 70, position: [0, 2, 15] }}
         >
-          <color attach="background" args={["#191920"]} />
-          <fog attach="fog" args={["#191920", 0, 15]} />
+          <color
+            attach="background"
+            args={[value ? colors.white.background : colors.black.background]}
+          />
+          <fog
+            attach="fog"
+            args={[value ? colors.white.fog : colors.black.fog, 0, 15]}
+          />
           <Environment preset="city" />
           <group position={[0, -0.5, 0]}>
             <Frames images={images} setContent={setContent} />
             <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
-              <planeGeometry args={[50, 50]} />
+              <planeGeometry args={[50, 100]} />
               <MeshReflectorMaterial
                 blur={[300, 100]}
                 resolution={2048}
-                mixBlur={1}
-                mixStrength={40}
+                mixBlur={0.95}
+                mixStrength={10}
                 roughness={1}
                 depthScale={1.2}
                 minDepthThreshold={0.4}
                 maxDepthThreshold={1.4}
-                color="#101010"
+                color={value ? colors.white.reflector : colors.black.reflector}
                 metalness={0.5}
               />
             </mesh>
           </group>
         </Canvas>
-       
       </div>
-      <div className="bg-gradient-to-b mt-8 m-5 from-black w-screen h-1/2 z-10 ">
+      <div className="mt-8   w-screen h-1/2 z-10">
         <text className=" flex text-lg">{content.title}</text>
         <text>{content.description}</text>
       </div>
@@ -80,8 +104,8 @@ function Frames({
     }
   });
   useFrame((state, dt) => {
-    state.camera.position.lerp(p, 0.025);
-    state.camera.quaternion.slerp(q, 0.025);
+    state.camera.position.lerp(p, 0.1);
+    state.camera.quaternion.slerp(q, 0.25);
   });
   return (
     <group
@@ -132,13 +156,26 @@ function Frame({
   });
   return (
     <group {...props}>
+      <group
+        scale={0.7}
+        position={[0.4, GOLDENRATIO / 3, 0]}
+      >
+        <group
+          scale={[0.95, 0.95, 0.95]}
+          position={[0, 0, 0.2]}
+        >
+          {content === "Frontend" ? (
+            <LaptopGaming GOLDENRATIO={GOLDENRATIO} />
+          ) : null}
+        </group>
+      </group>
       <mesh
         name={name}
         onPointerOver={(e) => (e.stopPropagation(), hover(true))}
         onPointerOut={() => hover(false)}
         onClick={() => setContent({ title: content, description: description })}
         scale={[1, GOLDENRATIO, 0.05]}
-        position={[0, GOLDENRATIO / 2, 0]}
+        position={[-0.55, GOLDENRATIO / 1.8, 0]}
       >
         <boxGeometry />
         <meshStandardMaterial
@@ -163,6 +200,7 @@ function Frame({
           url={url}
         />
       </mesh>
+
       <Text
         maxWidth={0.1}
         anchorX="left"
