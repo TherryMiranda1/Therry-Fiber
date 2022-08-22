@@ -1,5 +1,6 @@
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
+import { Leva } from 'leva'
 import App from "./App";
 import "./index.css";
 
@@ -55,5 +56,6 @@ const images = [
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Suspense fallback={null}>
     <App images={images} />
+    <Leva titleBar={{ title: 'SSR' }} collapsed  hidden />
   </Suspense>
 );

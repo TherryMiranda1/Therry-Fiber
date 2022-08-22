@@ -15,24 +15,11 @@ import { LaptopGaming } from "./utils/LaptopGaming";
 import { Phone } from "./utils/Phone";
 import { Rack } from "./utils/Rack";
 
-const colors = {
-  black: {
-    background: "#191920",
-    fog: "#191920",
-    reflector: "#101010",
-    font: "white",
-  },
-  white: {
-    background: "#e3dede",
-    fog: "#e3dede",
-    reflector: "#8c8888",
-    font: "black",
-  },
-};
+
 
 const GOLDENRATIO = 1.2;
 
-export default function Images({ images, value }) {
+export default function Images({ images, value, colors }) {
   const [content, setContent] = useState({ title: "", description: "" });
 
   return (

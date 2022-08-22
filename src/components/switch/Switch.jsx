@@ -4,7 +4,7 @@ import { FaMoon, FaSun } from "react-icons/fa";
 
 const Switch = (props) => {
   return (
-    <>
+    <div id="none">
       <input
         checked={props.isOn}
         onChange={props.handleToggle}
@@ -13,7 +13,12 @@ const Switch = (props) => {
         className="react-switch-checkbox"
       />
       <label
-        style={{position:'absolute', zIndex:2, background: props.isOn && props.onColor, margin: '5px'  }}
+        style={{
+          position: "absolute",
+          zIndex: 2,
+          background: props.isOn && props.onColor,
+          margin: "5px",
+        }}
         className="react-switch-label"
         htmlFor={"react-switch-new"}
       >
@@ -25,7 +30,7 @@ const Switch = (props) => {
           )}
         </span>
       </label>
-    </>
+    </div>
   );
 };
 
