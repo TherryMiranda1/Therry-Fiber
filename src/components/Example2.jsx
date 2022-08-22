@@ -31,6 +31,7 @@ const Example2 = ({ value, colors }) => {
             antialias: false,
             stencil: false,
             depth: false,
+            alpha: false
           }}
           camera={{ position: [50, 100, 50], fov: 17 }}
         >
@@ -180,10 +181,19 @@ const Example2 = ({ value, colors }) => {
         ) : null}
         {item === 2 ? (
           <div>
-            <h1>Backend</h1>
+            <h1
+            style={{
+              color: value ? colors.white.font : colors.black.font,
+            }}>Backend</h1>
             <section>
-              <h2>Tecnologias</h2>
-              <p>
+              <h2
+              style={{
+                color: value ? colors.white.font : colors.black.font,
+              }}>Tecnologias</h2>
+              <p
+              style={{
+                color: value ? colors.white.font : colors.black.font,
+              }}>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Doloremque eveniet eius expedita laudantium quaerat. Sapiente
                 qui assumenda veniam illum, cumque dignissimos in quibusdam.
@@ -191,8 +201,14 @@ const Example2 = ({ value, colors }) => {
               </p>
             </section>
             <section>
-              <h2>Trabajos Realizados</h2>
-              <p>
+              <h2
+              style={{
+                color: value ? colors.white.font : colors.black.font,
+              }}>Trabajos Realizados</h2>
+              <p
+              style={{
+                color: value ? colors.white.font : colors.black.font,
+              }}>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Doloremque eveniet eius expedita laudantium quaerat. Sapiente
                 qui assumenda veniam illum, cumque dignissimos in quibusdam.
@@ -200,8 +216,14 @@ const Example2 = ({ value, colors }) => {
               </p>
             </section>
             <section>
-              <h2>Metodologias</h2>
-              <p>
+              <h2
+              style={{
+                color: value ? colors.white.font : colors.black.font,
+              }}>Metodologias</h2>
+              <p
+              style={{
+                color: value ? colors.white.font : colors.black.font,
+              }}>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Doloremque eveniet eius expedita laudantium quaerat. Sapiente
                 qui assumenda veniam illum, cumque dignissimos in quibusdam.
@@ -212,10 +234,19 @@ const Example2 = ({ value, colors }) => {
         ) : null}
         {item === 3 ? (
           <div>
-            <h1>Mobile</h1>
+            <h1
+            style={{
+              color: value ? colors.white.font : colors.black.font,
+            }}>Mobile</h1>
             <section>
-              <h2>Tecnologias</h2>
-              <p>
+              <h2
+              style={{
+                color: value ? colors.white.font : colors.black.font,
+              }}>Tecnologias</h2>
+              <p
+              style={{
+                color: value ? colors.white.font : colors.black.font,
+              }}>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Doloremque eveniet eius expedita laudantium quaerat. Sapiente
                 qui assumenda veniam illum, cumque dignissimos in quibusdam.
@@ -223,8 +254,14 @@ const Example2 = ({ value, colors }) => {
               </p>
             </section>
             <section>
-              <h2>Trabajos Realizados</h2>
-              <p>
+              <h2
+              style={{
+                color: value ? colors.white.font : colors.black.font,
+              }}>Trabajos Realizados</h2>
+              <p
+              style={{
+                color: value ? colors.white.font : colors.black.font,
+              }}>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Doloremque eveniet eius expedita laudantium quaerat. Sapiente
                 qui assumenda veniam illum, cumque dignissimos in quibusdam.
@@ -232,8 +269,14 @@ const Example2 = ({ value, colors }) => {
               </p>
             </section>
             <section>
-              <h2>Metodologias</h2>
-              <p>
+              <h2
+              style={{
+                color: value ? colors.white.font : colors.black.font,
+              }}>Metodologias</h2>
+              <p
+              style={{
+                color: value ? colors.white.font : colors.black.font,
+              }}>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Doloremque eveniet eius expedita laudantium quaerat. Sapiente
                 qui assumenda veniam illum, cumque dignissimos in quibusdam.
