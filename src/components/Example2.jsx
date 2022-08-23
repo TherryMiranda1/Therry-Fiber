@@ -13,9 +13,18 @@ import { LaptopGaming } from "./utils/LaptopGaming";
 import { Phone } from "./utils/Phone";
 import { Rack } from "./utils/Rack";
 import Deck from "../components/cards/Cards";
+import { Camera } from "./Camera/Camera";
+import { gsap } from "gsap";
 
 const Example2 = ({ value, colors }) => {
   const [item, setItem] = useState(null);
+  const [showItems, setShowItems] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowItems(true);
+    }, 2000);
+  }, []);
   return (
     <div
       className="w-screen h-screen"
@@ -28,13 +37,13 @@ const Example2 = ({ value, colors }) => {
           shadows
           gl={{
             logarithmicDepthBuffer: true,
-            antialias: false,
+            antialias: true,
             stencil: false,
-            depth: false,
-            alpha: false
+            depth: true,
+            alpha: false,
           }}
-          camera={{ position: [50, 100, 50], fov: 17 }}
         >
+          <Camera />
           <color
             attach="background"
             args={[value ? colors.white.background : colors.black.reflector]}
@@ -42,25 +51,8 @@ const Example2 = ({ value, colors }) => {
           <hemisphereLight intensity={0.5} />
           <directionalLight position={[0, 2, 5]} castShadow intensity={1} />
           <group position={[2, -2, 0]}>
+            <Video />
             <group position={[0, -0.9, 0]}>
-              {/* <Plane
-              color="black"
-              rotation-x={-Math.PI / 2}
-              position-z={3}
-              scale={[10, 30, 0.2]}
-            /> */}
-              {/* <Plane
-                color="#f4ae00"
-                rotation-x={-Math.PI / 2}
-                position={[1, 2, -10]}
-                scale={[4.2, 1, 4]}
-              /> */}
-              {/* <Plane
-                color="#436fbd"
-                rotation-x={-Math.PI / 2}
-                position={[-2.5, 1, -8.5]}
-                scale={[1.5, 4, 3]}
-              /> */}
               <Plane
                 text={"Mobile"}
                 value={value}
@@ -107,12 +99,19 @@ const Example2 = ({ value, colors }) => {
                 />
               </mesh>
             </group>
-            <Sphere item={item} setItem={setItem} />
-            <Sphere2 item={item} setItem={setItem} />
-            <Sphere3 item={item} setItem={setItem} />
-            <Video />
+            {showItems ? (
+              <Suspense fallback={null}>
+                <Sphere item={item} setItem={setItem} />
+                <Suspense fallback={null}>
+                  <Sphere2 item={item} setItem={setItem} />
+                  <Suspense fallback={null}>
+                    <Sphere3 item={item} setItem={setItem} />
+                  </Suspense>
+                </Suspense>
+              </Suspense>
+            ) : null}
           </group>
-          <Effects />
+          {/* <Effects /> */}
           <OrbitControls
             enablePan={false}
             enableDamping={true}
@@ -133,14 +132,20 @@ const Example2 = ({ value, colors }) => {
               Frontend
             </h1>
             <section>
-              <h2 className=""
-              style={{
-                color: value ? colors.white.font : colors.black.font,
-              }}>Tecnologias</h2>
-              <p className=""
-              style={{
-                color: value ? colors.white.font : colors.black.font,
-              }}>
+              <h2
+                className=""
+                style={{
+                  color: value ? colors.white.font : colors.black.font,
+                }}
+              >
+                Tecnologias
+              </h2>
+              <p
+                className=""
+                style={{
+                  color: value ? colors.white.font : colors.black.font,
+                }}
+              >
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Doloremque eveniet eius expedita laudantium quaerat. Sapiente
                 qui assumenda veniam illum, cumque dignissimos in quibusdam.
@@ -148,14 +153,20 @@ const Example2 = ({ value, colors }) => {
               </p>
             </section>
             <section>
-              <h2 className=""
-              style={{
-                color: value ? colors.white.font : colors.black.font,
-              }}>Trabajos Realizados</h2>
-              <p className=""
-              style={{
-                color: value ? colors.white.font : colors.black.font,
-              }}>
+              <h2
+                className=""
+                style={{
+                  color: value ? colors.white.font : colors.black.font,
+                }}
+              >
+                Trabajos Realizados
+              </h2>
+              <p
+                className=""
+                style={{
+                  color: value ? colors.white.font : colors.black.font,
+                }}
+              >
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Doloremque eveniet eius expedita laudantium quaerat. Sapiente
                 qui assumenda veniam illum, cumque dignissimos in quibusdam.
@@ -163,14 +174,20 @@ const Example2 = ({ value, colors }) => {
               </p>
             </section>
             <section>
-              <h2 className=""
-              style={{
-                color: value ? colors.white.font : colors.black.font,
-              }}>Metodologias</h2>
-              <p className=""
-              style={{
-                color: value ? colors.white.font : colors.black.font,
-              }}>
+              <h2
+                className=""
+                style={{
+                  color: value ? colors.white.font : colors.black.font,
+                }}
+              >
+                Metodologias
+              </h2>
+              <p
+                className=""
+                style={{
+                  color: value ? colors.white.font : colors.black.font,
+                }}
+              >
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Doloremque eveniet eius expedita laudantium quaerat. Sapiente
                 qui assumenda veniam illum, cumque dignissimos in quibusdam.
@@ -182,18 +199,25 @@ const Example2 = ({ value, colors }) => {
         {item === 2 ? (
           <div>
             <h1
-            style={{
-              color: value ? colors.white.font : colors.black.font,
-            }}>Backend</h1>
+              style={{
+                color: value ? colors.white.font : colors.black.font,
+              }}
+            >
+              Backend
+            </h1>
             <section>
               <h2
-              style={{
-                color: value ? colors.white.font : colors.black.font,
-              }}>Tecnologias</h2>
+                style={{
+                  color: value ? colors.white.font : colors.black.font,
+                }}
+              >
+                Tecnologias
+              </h2>
               <p
-              style={{
-                color: value ? colors.white.font : colors.black.font,
-              }}>
+                style={{
+                  color: value ? colors.white.font : colors.black.font,
+                }}
+              >
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Doloremque eveniet eius expedita laudantium quaerat. Sapiente
                 qui assumenda veniam illum, cumque dignissimos in quibusdam.
@@ -202,13 +226,17 @@ const Example2 = ({ value, colors }) => {
             </section>
             <section>
               <h2
-              style={{
-                color: value ? colors.white.font : colors.black.font,
-              }}>Trabajos Realizados</h2>
+                style={{
+                  color: value ? colors.white.font : colors.black.font,
+                }}
+              >
+                Trabajos Realizados
+              </h2>
               <p
-              style={{
-                color: value ? colors.white.font : colors.black.font,
-              }}>
+                style={{
+                  color: value ? colors.white.font : colors.black.font,
+                }}
+              >
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Doloremque eveniet eius expedita laudantium quaerat. Sapiente
                 qui assumenda veniam illum, cumque dignissimos in quibusdam.
@@ -217,13 +245,17 @@ const Example2 = ({ value, colors }) => {
             </section>
             <section>
               <h2
-              style={{
-                color: value ? colors.white.font : colors.black.font,
-              }}>Metodologias</h2>
+                style={{
+                  color: value ? colors.white.font : colors.black.font,
+                }}
+              >
+                Metodologias
+              </h2>
               <p
-              style={{
-                color: value ? colors.white.font : colors.black.font,
-              }}>
+                style={{
+                  color: value ? colors.white.font : colors.black.font,
+                }}
+              >
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Doloremque eveniet eius expedita laudantium quaerat. Sapiente
                 qui assumenda veniam illum, cumque dignissimos in quibusdam.
@@ -235,18 +267,25 @@ const Example2 = ({ value, colors }) => {
         {item === 3 ? (
           <div>
             <h1
-            style={{
-              color: value ? colors.white.font : colors.black.font,
-            }}>Mobile</h1>
+              style={{
+                color: value ? colors.white.font : colors.black.font,
+              }}
+            >
+              Mobile
+            </h1>
             <section>
               <h2
-              style={{
-                color: value ? colors.white.font : colors.black.font,
-              }}>Tecnologias</h2>
+                style={{
+                  color: value ? colors.white.font : colors.black.font,
+                }}
+              >
+                Tecnologias
+              </h2>
               <p
-              style={{
-                color: value ? colors.white.font : colors.black.font,
-              }}>
+                style={{
+                  color: value ? colors.white.font : colors.black.font,
+                }}
+              >
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Doloremque eveniet eius expedita laudantium quaerat. Sapiente
                 qui assumenda veniam illum, cumque dignissimos in quibusdam.
@@ -255,13 +294,17 @@ const Example2 = ({ value, colors }) => {
             </section>
             <section>
               <h2
-              style={{
-                color: value ? colors.white.font : colors.black.font,
-              }}>Trabajos Realizados</h2>
+                style={{
+                  color: value ? colors.white.font : colors.black.font,
+                }}
+              >
+                Trabajos Realizados
+              </h2>
               <p
-              style={{
-                color: value ? colors.white.font : colors.black.font,
-              }}>
+                style={{
+                  color: value ? colors.white.font : colors.black.font,
+                }}
+              >
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Doloremque eveniet eius expedita laudantium quaerat. Sapiente
                 qui assumenda veniam illum, cumque dignissimos in quibusdam.
@@ -270,13 +313,17 @@ const Example2 = ({ value, colors }) => {
             </section>
             <section>
               <h2
-              style={{
-                color: value ? colors.white.font : colors.black.font,
-              }}>Metodologias</h2>
+                style={{
+                  color: value ? colors.white.font : colors.black.font,
+                }}
+              >
+                Metodologias
+              </h2>
               <p
-              style={{
-                color: value ? colors.white.font : colors.black.font,
-              }}>
+                style={{
+                  color: value ? colors.white.font : colors.black.font,
+                }}
+              >
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Doloremque eveniet eius expedita laudantium quaerat. Sapiente
                 qui assumenda veniam illum, cumque dignissimos in quibusdam.
@@ -297,20 +344,17 @@ function Sphere({ item, setItem }) {
 
   useCursor(active);
   useFrame((state) => {
-    item == 2
-      ? (ref.current.position.y = 2)
-      : (ref.current.position.y =
-          Math.sin(state.clock.getElapsedTime() / 2) + 1.8);
-    state.camera.position.lerp({ x: 35, y: 10, z: 30 }, 0.03);
+    state.camera.position.lerp({ x: 25, y: 5, z: 10 }, 0.08);
     item !== 1
       ? null
-      : state.camera.position.lerp({ x: 20, y: 0, z: -10 }, 0.02);
+      : state.camera.position.lerp({ x: 20, y: 0, z: -10 }, 0.08)
     item === 1 ? state.camera.lookAt(0, 0, 10) : null;
   });
+
   return (
     <group
       ref={ref}
-      position={[0, 0, 10]}
+      position={[0, 2, 10]}
       receiveShadow
       castShadow
       onClick={() => {
@@ -333,10 +377,6 @@ function Sphere2({ item, setItem }) {
   const [zoom, set] = useState(true);
   useCursor(active);
   useFrame((state) => {
-    item == 2
-      ? (ref.current.position.y = 2)
-      : (ref.current.position.y =
-          Math.sin(state.clock.getElapsedTime() / 1.5) + 1.8);
     item !== 2
       ? null
       : state.camera.position.lerp({ x: 22, y: 0, z: -40 }, 0.02);
@@ -345,7 +385,7 @@ function Sphere2({ item, setItem }) {
   return (
     <mesh
       ref={ref}
-      position={[0, 0, 0]}
+      position={[0, 2, 0]}
       receiveShadow
       castShadow
       onClick={() => {
@@ -368,19 +408,20 @@ function Sphere3({ item, setItem }) {
   const [zoom, set] = useState(true);
   useCursor(active);
   useFrame((state) => {
-    item == 2
-      ? (ref.current.position.y = 2)
-      : (ref.current.position.y =
-          Math.sin(state.clock.getElapsedTime() / 2) + 1.8);
     item !== 3
       ? null
       : state.camera.position.lerp({ x: 25, y: -5, z: -58 }, 0.02);
     item === 3 ? state.camera.lookAt(0, 0, -10) : null;
   });
+  useEffect(() => {
+    setTimeout(() => {
+      ref.current.position.y = 2;
+    }, 1000);
+  }, []);
   return (
     <mesh
       ref={ref}
-      position={[0, 0, -10]}
+      position={[0, 2, -10]}
       receiveShadow
       castShadow
       onClick={() => {
