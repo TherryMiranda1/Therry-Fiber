@@ -9,7 +9,7 @@ import Page from "./Page";
 export function Laptop(props) {
   const { nodes, materials } = useGLTF("/Laptop/Laptop.glb");
   return (
-    <group {...props} dispose={null}>
+    <group {...props} position={[0, 0.02, 0]} scale={0.1} rotation={[ 0, Math.PI / 1.9, Math.PI / 0.05]} dispose={null}>
       <group name="Scene">
         <mesh
           name="Cube"
@@ -70,9 +70,6 @@ export function Laptop(props) {
               borderRadius: 10,
             }}
           >
-            <Page/>
-            <Page/>
-            <Page/>
           </Html>
         </mesh>
         <mesh

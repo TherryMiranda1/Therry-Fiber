@@ -9,21 +9,40 @@ import {
   Text,
 } from "@react-three/drei";
 import { Effects } from "../components/ejemplo2/Effects";
+import { Laptop } from "./utils/Laptop";
 import { LaptopGaming } from "./utils/LaptopGaming";
 import { Phone } from "./utils/Phone";
 import { Rack } from "./utils/Rack";
 import Deck from "../components/cards/Cards";
 import { Camera } from "./Camera/Camera";
 import { gsap } from "gsap";
+import PresentationScreen from "./PresentationScreen";
+import TextScreen from "./TextScreen";
 
 const Example2 = ({ value, colors }) => {
   const [item, setItem] = useState(null);
-  const [showItems, setShowItems] = useState(false);
+  const [showLaptop, setShowLaptop] = useState(false);
+  const [showRack, setShowRack] = useState(false);
+  const [showPhone, setShowPhone] = useState(false);
+  const [showTitles, setShowTitles] = useState(false);
+  const [showScreen, setShowScreen] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
-      setShowItems(true);
+      setShowScreen(true);
     }, 2000);
+    setTimeout(() => {
+      setShowLaptop(true);
+    }, 4000);
+    setTimeout(() => {
+      setShowRack(true);
+    }, 4000);
+    setTimeout(() => {
+      setShowPhone(true);
+    }, 4000);
+    setTimeout(() => {
+      setShowTitles(true);
+    }, 4000);
   }, []);
   return (
     <div
@@ -33,306 +52,104 @@ const Example2 = ({ value, colors }) => {
       }}
     >
       <div className="w-screen h-1/2 ">
-        <Canvas
-          shadows
-          gl={{
-            logarithmicDepthBuffer: true,
-            antialias: true,
-            stencil: false,
-            depth: true,
-            alpha: false,
-          }}
-        >
-          <Camera />
-          <color
-            attach="background"
-            args={[value ? colors.white.background : colors.black.reflector]}
-          />
-          <hemisphereLight intensity={0.5} />
-          <directionalLight position={[0, 2, 5]} castShadow intensity={1} />
-          <group position={[2, -2, 0]}>
-            <Video />
-            <group position={[0, -0.9, 0]}>
-              <Plane
-                text={"Mobile"}
-                value={value}
-                color={value ? "#D7D7D7" : "#595959"}
-                rotation-x={-Math.PI / 2}
-                position={[0, 0.5, -10]}
-                textPosition={[2.5, 1, -9.5]}
-                scale={[2, 4, 1]}
-              />
-              <Plane
-                text={"Backend"}
-                value={value}
-                color={value ? "#D7D7D7" : "#595959"}
-                rotation-x={-Math.PI / 2}
-                position={[0, 0.5, 0]}
-                textPosition={[2.5, 1, 0.5]}
-                scale={[2, 4, 1]}
-              />
-              <Plane
-                text={"Frontend"}
-                value={value}
-                color={value ? "#D7D7D7" : "#595959"}
-                rotation-x={-Math.PI / 2}
-                position={[0, 0.5, 10]}
-                textPosition={[2.5, 1, 10.8]}
-                scale={[2, 4, 1]}
-              />
+        {showScreen ? (
+          <Canvas
+            shadows
+            gl={{
+              logarithmicDepthBuffer: true,
+              antialias: true,
+              stencil: false,
+              depth: true,
+              alpha: false,
+            }}
+          >
+            <Camera />
+            <color
+              attach="background"
+              args={[value ? colors.white.background : colors.black.reflector]}
+            />
+            <hemisphereLight intensity={0.5} />
+            <directionalLight position={[0, 2, 5]} castShadow intensity={1} />
+            <group position={[2, -2, 0]}>
+              <Video />
 
-              <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
-                <planeGeometry args={[10, 40]} />
-                <MeshReflectorMaterial
-                  blur={[300, 100]}
-                  resolution={2048}
-                  mixBlur={0.9}
-                  mixStrength={value ? 10 : 60}
-                  roughness={1}
-                  depthScale={1.2}
-                  minDepthThreshold={0.4}
-                  maxDepthThreshold={1.4}
-                  color={
-                    value ? colors.white.reflector : colors.black.reflector
-                  }
-                  metalness={0.5}
-                />
-              </mesh>
-            </group>
-            {showItems ? (
-              <Suspense fallback={null}>
-                <Sphere item={item} setItem={setItem} />
+              
                 <Suspense fallback={null}>
-                  <Sphere2 item={item} setItem={setItem} />
+                     <group position={[0, -0.9, 0]}>
+                      {/* <Plane
+                        text={"Mobile"}
+                        value={value}
+                        color={value ? "#D7D7D7" : "#595959"}
+                        rotation-x={-Math.PI / 2}
+                        position={[0, 0.5, -10]}
+                        textPosition={[2.5, 1, -9.5]}
+                        scale={[2, 4, 1]}
+                      />
+                      <Plane
+                        text={"Backend"}
+                        value={value}
+                        color={value ? "#D7D7D7" : "#595959"}
+                        rotation-x={-Math.PI / 2}
+                        position={[0, 0.5, 0]}
+                        textPosition={[2.5, 1, 0.5]}
+                        scale={[2, 4, 1]}
+                      />
+                      <Plane
+                        text={"Frontend"}
+                        value={value}
+                        color={value ? "#D7D7D7" : "#595959"}
+                        rotation-x={-Math.PI / 2}
+                        position={[0, 0.5, 10]}
+                        textPosition={[2.5, 1, 10.8]}
+                        scale={[2, 4, 1]}
+                      /> */}
+
+                      <mesh
+                        rotation={[-Math.PI / 2, 0, 0]}
+                        position={[0, 0, 0]}
+                      >
+                        <planeGeometry args={[10, 40]} />
+                        <MeshReflectorMaterial
+                          blur={[300, 100]}
+                          resolution={2048}
+                          mixBlur={0.9}
+                          mixStrength={value ? 10 : 60}
+                          roughness={1}
+                          depthScale={1.2}
+                          minDepthThreshold={0.4}
+                          maxDepthThreshold={1.4}
+                          color={
+                            value
+                              ? colors.white.reflector
+                              : colors.black.reflector
+                          }
+                          metalness={0.5}
+                        />
+                      </mesh>
+                    </group> 
+
+                  <Sphere item={item} setItem={setItem} />
                   <Suspense fallback={null}>
-                    <Sphere3 item={item} setItem={setItem} />
+                    <Sphere2 item={item} setItem={setItem} />
+                    <Suspense fallback={null}>
+                      <Sphere3 item={item} setItem={setItem} />
+                    </Suspense>
                   </Suspense>
                 </Suspense>
-              </Suspense>
-            ) : null}
-          </group>
-          {/* <Effects /> */}
-          <OrbitControls
-            enablePan={false}
-            enableDamping={true}
-            keys={true}
-            enableZoom={false}
-          />
-        </Canvas>
+            </group>
+            {/* <Effects /> */}
+            <OrbitControls
+              enablePan={false}
+              enableDamping={true}
+              keys={true}
+              enableZoom={false}
+            />
+          </Canvas>
+        ) : (
+          <PresentationScreen />
+        )}
       </div>
-      <div className="w-screen h-screen">
-        {item === 1 ? (
-          <div>
-            <h1
-              className=""
-              style={{
-                color: value ? colors.white.font : colors.black.font,
-              }}
-            >
-              Frontend
-            </h1>
-            <section>
-              <h2
-                className=""
-                style={{
-                  color: value ? colors.white.font : colors.black.font,
-                }}
-              >
-                Tecnologias
-              </h2>
-              <p
-                className=""
-                style={{
-                  color: value ? colors.white.font : colors.black.font,
-                }}
-              >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Doloremque eveniet eius expedita laudantium quaerat. Sapiente
-                qui assumenda veniam illum, cumque dignissimos in quibusdam.
-                Libero quae dolor, odio quidem non blanditiis?
-              </p>
-            </section>
-            <section>
-              <h2
-                className=""
-                style={{
-                  color: value ? colors.white.font : colors.black.font,
-                }}
-              >
-                Trabajos Realizados
-              </h2>
-              <p
-                className=""
-                style={{
-                  color: value ? colors.white.font : colors.black.font,
-                }}
-              >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Doloremque eveniet eius expedita laudantium quaerat. Sapiente
-                qui assumenda veniam illum, cumque dignissimos in quibusdam.
-                Libero quae dolor, odio quidem non blanditiis?
-              </p>
-            </section>
-            <section>
-              <h2
-                className=""
-                style={{
-                  color: value ? colors.white.font : colors.black.font,
-                }}
-              >
-                Metodologias
-              </h2>
-              <p
-                className=""
-                style={{
-                  color: value ? colors.white.font : colors.black.font,
-                }}
-              >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Doloremque eveniet eius expedita laudantium quaerat. Sapiente
-                qui assumenda veniam illum, cumque dignissimos in quibusdam.
-                Libero quae dolor, odio quidem non blanditiis?
-              </p>
-            </section>
-          </div>
-        ) : null}
-        {item === 2 ? (
-          <div>
-            <h1
-              style={{
-                color: value ? colors.white.font : colors.black.font,
-              }}
-            >
-              Backend
-            </h1>
-            <section>
-              <h2
-                style={{
-                  color: value ? colors.white.font : colors.black.font,
-                }}
-              >
-                Tecnologias
-              </h2>
-              <p
-                style={{
-                  color: value ? colors.white.font : colors.black.font,
-                }}
-              >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Doloremque eveniet eius expedita laudantium quaerat. Sapiente
-                qui assumenda veniam illum, cumque dignissimos in quibusdam.
-                Libero quae dolor, odio quidem non blanditiis?
-              </p>
-            </section>
-            <section>
-              <h2
-                style={{
-                  color: value ? colors.white.font : colors.black.font,
-                }}
-              >
-                Trabajos Realizados
-              </h2>
-              <p
-                style={{
-                  color: value ? colors.white.font : colors.black.font,
-                }}
-              >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Doloremque eveniet eius expedita laudantium quaerat. Sapiente
-                qui assumenda veniam illum, cumque dignissimos in quibusdam.
-                Libero quae dolor, odio quidem non blanditiis?
-              </p>
-            </section>
-            <section>
-              <h2
-                style={{
-                  color: value ? colors.white.font : colors.black.font,
-                }}
-              >
-                Metodologias
-              </h2>
-              <p
-                style={{
-                  color: value ? colors.white.font : colors.black.font,
-                }}
-              >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Doloremque eveniet eius expedita laudantium quaerat. Sapiente
-                qui assumenda veniam illum, cumque dignissimos in quibusdam.
-                Libero quae dolor, odio quidem non blanditiis?
-              </p>
-            </section>
-          </div>
-        ) : null}
-        {item === 3 ? (
-          <div>
-            <h1
-              style={{
-                color: value ? colors.white.font : colors.black.font,
-              }}
-            >
-              Mobile
-            </h1>
-            <section>
-              <h2
-                style={{
-                  color: value ? colors.white.font : colors.black.font,
-                }}
-              >
-                Tecnologias
-              </h2>
-              <p
-                style={{
-                  color: value ? colors.white.font : colors.black.font,
-                }}
-              >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Doloremque eveniet eius expedita laudantium quaerat. Sapiente
-                qui assumenda veniam illum, cumque dignissimos in quibusdam.
-                Libero quae dolor, odio quidem non blanditiis?
-              </p>
-            </section>
-            <section>
-              <h2
-                style={{
-                  color: value ? colors.white.font : colors.black.font,
-                }}
-              >
-                Trabajos Realizados
-              </h2>
-              <p
-                style={{
-                  color: value ? colors.white.font : colors.black.font,
-                }}
-              >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Doloremque eveniet eius expedita laudantium quaerat. Sapiente
-                qui assumenda veniam illum, cumque dignissimos in quibusdam.
-                Libero quae dolor, odio quidem non blanditiis?
-              </p>
-            </section>
-            <section>
-              <h2
-                style={{
-                  color: value ? colors.white.font : colors.black.font,
-                }}
-              >
-                Metodologias
-              </h2>
-              <p
-                style={{
-                  color: value ? colors.white.font : colors.black.font,
-                }}
-              >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Doloremque eveniet eius expedita laudantium quaerat. Sapiente
-                qui assumenda veniam illum, cumque dignissimos in quibusdam.
-                Libero quae dolor, odio quidem non blanditiis?
-              </p>
-            </section>
-          </div>
-        ) : null}
-      </div>
+      <TextScreen item={item} value={value} colors={colors}/>
     </div>
   );
 };
@@ -347,7 +164,7 @@ function Sphere({ item, setItem }) {
     state.camera.position.lerp({ x: 25, y: 5, z: 10 }, 0.08);
     item !== 1
       ? null
-      : state.camera.position.lerp({ x: 20, y: 0, z: -10 }, 0.08)
+      : state.camera.position.lerp({ x: 20, y: 0, z: -10 }, 0.08);
     item === 1 ? state.camera.lookAt(0, 0, 10) : null;
   });
 
