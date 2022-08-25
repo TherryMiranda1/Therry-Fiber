@@ -1,8 +1,9 @@
 import React from 'react'
+import CarrouselComponent from './Carrousel'
 
 function TextScreen({item, value, colors}) {
   return (
-    <div className="w-screen h-screen">
+    <div className="w-screen h-screen m-5">
         {item === 1 ? (
           <div>
             <h1
@@ -22,6 +23,7 @@ function TextScreen({item, value, colors}) {
               >
                 Tecnologias
               </h2>
+              <CarrouselComponent/>
               <p
                 className=""
                 style={{

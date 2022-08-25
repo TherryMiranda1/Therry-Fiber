@@ -8,50 +8,52 @@ import {
   MeshReflectorMaterial,
   Text,
 } from "@react-three/drei";
-import { Effects } from "../components/ejemplo2/Effects";
 import { Laptop } from "./utils/Laptop";
 import { LaptopGaming } from "./utils/LaptopGaming";
 import { Phone } from "./utils/Phone";
 import { Rack } from "./utils/Rack";
-import Deck from "../components/cards/Cards";
 import { Camera } from "./Camera/Camera";
-import { gsap } from "gsap";
+import gsap from "gsap";
 import PresentationScreen from "./PresentationScreen";
 import TextScreen from "./TextScreen";
 
+const timeline = new gsap.timeline({
+  defaults: {
+    duration: 1,
+  },
+});
+
+const moveItem = (ref) => {
+  if (!!ref.current) {
+    timeline.from(
+      ref.current.position,
+      {
+        y: 15,
+        ease: "bounce.out",
+      },
+      "+=0.5"
+    );
+  }
+};
+
 const Example2 = ({ value, colors }) => {
   const [item, setItem] = useState(null);
-  const [showLaptop, setShowLaptop] = useState(false);
-  const [showRack, setShowRack] = useState(false);
-  const [showPhone, setShowPhone] = useState(false);
-  const [showTitles, setShowTitles] = useState(false);
   const [showScreen, setShowScreen] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
       setShowScreen(true);
-    }, 2000);
-    setTimeout(() => {
-      setShowLaptop(true);
-    }, 4000);
-    setTimeout(() => {
-      setShowRack(true);
-    }, 4000);
-    setTimeout(() => {
-      setShowPhone(true);
-    }, 4000);
-    setTimeout(() => {
-      setShowTitles(true);
-    }, 4000);
+    }, 1500);
   }, []);
+
   return (
     <div
-      className="w-screen h-screen"
+      className="w-screen  h-screen"
       style={{
         background: value ? colors.white.background : colors.black.background,
       }}
     >
-      <div className="w-screen h-1/2 ">
+      <div className="w-full h-1/2 m-auto">
         {showScreen ? (
           <Canvas
             shadows
@@ -72,70 +74,34 @@ const Example2 = ({ value, colors }) => {
             <directionalLight position={[0, 2, 5]} castShadow intensity={1} />
             <group position={[2, -2, 0]}>
               <Video />
-
-              
+              <Suspense fallback={null}>
+                <group position={[0, 0.9, 0]}>
+                  <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
+                    <planeGeometry args={[10, 40]} />
+                    <MeshReflectorMaterial
+                      blur={[300, 100]}
+                      resolution={2048}
+                      mixBlur={0.9}
+                      mixStrength={value ? 10 : 60}
+                      roughness={1}
+                      depthScale={1.2}
+                      minDepthThreshold={0.4}
+                      maxDepthThreshold={1.4}
+                      color={
+                        value ? colors.white.reflector : colors.black.reflector
+                      }
+                      metalness={0.5}
+                    />
+                  </mesh>
+                </group>
+                <Sphere item={item} setItem={setItem} />
                 <Suspense fallback={null}>
-                     <group position={[0, -0.9, 0]}>
-                      {/* <Plane
-                        text={"Mobile"}
-                        value={value}
-                        color={value ? "#D7D7D7" : "#595959"}
-                        rotation-x={-Math.PI / 2}
-                        position={[0, 0.5, -10]}
-                        textPosition={[2.5, 1, -9.5]}
-                        scale={[2, 4, 1]}
-                      />
-                      <Plane
-                        text={"Backend"}
-                        value={value}
-                        color={value ? "#D7D7D7" : "#595959"}
-                        rotation-x={-Math.PI / 2}
-                        position={[0, 0.5, 0]}
-                        textPosition={[2.5, 1, 0.5]}
-                        scale={[2, 4, 1]}
-                      />
-                      <Plane
-                        text={"Frontend"}
-                        value={value}
-                        color={value ? "#D7D7D7" : "#595959"}
-                        rotation-x={-Math.PI / 2}
-                        position={[0, 0.5, 10]}
-                        textPosition={[2.5, 1, 10.8]}
-                        scale={[2, 4, 1]}
-                      /> */}
-
-                      <mesh
-                        rotation={[-Math.PI / 2, 0, 0]}
-                        position={[0, 0, 0]}
-                      >
-                        <planeGeometry args={[10, 40]} />
-                        <MeshReflectorMaterial
-                          blur={[300, 100]}
-                          resolution={2048}
-                          mixBlur={0.9}
-                          mixStrength={value ? 10 : 60}
-                          roughness={1}
-                          depthScale={1.2}
-                          minDepthThreshold={0.4}
-                          maxDepthThreshold={1.4}
-                          color={
-                            value
-                              ? colors.white.reflector
-                              : colors.black.reflector
-                          }
-                          metalness={0.5}
-                        />
-                      </mesh>
-                    </group> 
-
-                  <Sphere item={item} setItem={setItem} />
+                  <Sphere2 item={item} setItem={setItem} />
                   <Suspense fallback={null}>
-                    <Sphere2 item={item} setItem={setItem} />
-                    <Suspense fallback={null}>
-                      <Sphere3 item={item} setItem={setItem} />
-                    </Suspense>
+                    <Sphere3 item={item} setItem={setItem} />
                   </Suspense>
                 </Suspense>
+              </Suspense>
             </group>
             {/* <Effects /> */}
             <OrbitControls
@@ -149,12 +115,18 @@ const Example2 = ({ value, colors }) => {
           <PresentationScreen />
         )}
       </div>
-      <TextScreen item={item} value={value} colors={colors}/>
+      <div
+        style={{
+          background: value ? colors.white.background : colors.black.background,
+        }}
+      >
+        <TextScreen item={item} value={value} colors={colors} />
+      </div>
     </div>
   );
 };
 
-function Sphere({ item, setItem }) {
+function Sphere({ item, setItem, text }) {
   const ref = useRef();
   const [active, setActive] = useState(false);
   const [zoom, set] = useState(true);
@@ -162,16 +134,21 @@ function Sphere({ item, setItem }) {
   useCursor(active);
   useFrame((state) => {
     state.camera.position.lerp({ x: 25, y: 5, z: 10 }, 0.08);
+    state.camera.setFocalLength(66);
     item !== 1
       ? null
       : state.camera.position.lerp({ x: 20, y: 0, z: -10 }, 0.08);
-    item === 1 ? state.camera.lookAt(0, 0, 10) : null;
+    item === 1 ? state.camera.lookAt(0, 0, 5) : null;
   });
+
+  useEffect(() => {
+    moveItem(ref);
+  }, []);
 
   return (
     <group
       ref={ref}
-      position={[0, 2, 10]}
+      position={[0, 2, 5]}
       receiveShadow
       castShadow
       onClick={() => {
@@ -184,25 +161,55 @@ function Sphere({ item, setItem }) {
       <Suspense fallback={null}>
         <LaptopGaming />
       </Suspense>
+      <Text
+        maxWidth={0.1}
+        anchorX="left"
+        anchorY="top"
+        fontSize={0.5}
+        position={[-2, 3, 0]}
+        rotation-y={-Math.PI / 0.285}
+        color={"black"}
+      >
+        Frontend
+      </Text>
+      <Text
+        maxWidth={0.1}
+        anchorX="left"
+        anchorY="top"
+        fontSize={0.49}
+        position={[-2, 3, 0]}
+        rotation-y={-Math.PI / 0.285}
+        color={"white"}
+      >
+        Frontend
+      </Text>
     </group>
   );
 }
 
-function Sphere2({ item, setItem }) {
+function Sphere2({ item, setItem, text }) {
   const ref = useRef();
   const [active, setActive] = useState(false);
   const [zoom, set] = useState(true);
   useCursor(active);
+
   useFrame((state) => {
     item !== 2
       ? null
-      : state.camera.position.lerp({ x: 22, y: 0, z: -40 }, 0.02);
-    item === 2 ? state.camera.lookAt(0, 0, 0) : null;
+      : state.camera.position.lerp({ x: 22, y: 5, z: -40 }, 0.04);
+    item === 2
+      ? state.camera.setFocalLength(40) && state.camera.lookAt(0, 0, 0)
+      : null;
   });
+
+  useEffect(() => {
+    moveItem(ref);
+  }, []);
+
   return (
     <mesh
       ref={ref}
-      position={[0, 2, 0]}
+      position={[0, 1.5, 0]}
       receiveShadow
       castShadow
       onClick={() => {
@@ -215,30 +222,52 @@ function Sphere2({ item, setItem }) {
       <Suspense fallback={null}>
         <Rack />
       </Suspense>
+      <Text
+        position={[-2, 4, 0]}
+        maxWidth={0.1}
+        anchorX="left"
+        anchorY="top"
+        fontSize={0.5}
+        rotation-y={-Math.PI / 0.285}
+        color={"black"}
+      >
+        Backend
+      </Text>
+      <Text
+        position={[-2, 4, 0]}
+        maxWidth={0.1}
+        anchorX="left"
+        anchorY="top"
+        fontSize={0.49}
+        rotation-y={-Math.PI / 0.285}
+        color={"white"}
+      >
+        Backend
+      </Text>
     </mesh>
   );
 }
 
-function Sphere3({ item, setItem }) {
+function Sphere3({ item, setItem, text }) {
   const ref = useRef();
   const [active, setActive] = useState(false);
   const [zoom, set] = useState(true);
   useCursor(active);
+
   useFrame((state) => {
     item !== 3
       ? null
       : state.camera.position.lerp({ x: 25, y: -5, z: -58 }, 0.02);
-    item === 3 ? state.camera.lookAt(0, 0, -10) : null;
+    item === 3 ? state.camera.lookAt(0, 0, -5) : null;
   });
+
   useEffect(() => {
-    setTimeout(() => {
-      ref.current.position.y = 2;
-    }, 1000);
+    moveItem(ref);
   }, []);
   return (
     <mesh
       ref={ref}
-      position={[0, 2, -10]}
+      position={[0, 2, -5]}
       receiveShadow
       castShadow
       onClick={() => {
@@ -251,6 +280,30 @@ function Sphere3({ item, setItem }) {
       <Suspense fallback={null}>
         <Phone />
       </Suspense>
+      <Text
+        shadows={true}
+        position={[-0.9, 3, 0.6]}
+        maxWidth={0.1}
+        anchorX="left"
+        anchorY="top"
+        fontSize={0.5}
+        rotation-y={-Math.PI / 0.285}
+        color={"black"}
+      >
+        Mobile
+      </Text>
+      <Text
+        shadows={true}
+        position={[-0.9, 3, 0.6]}
+        maxWidth={0.1}
+        anchorX="left"
+        anchorY="top"
+        fontSize={0.49}
+        rotation-y={-Math.PI / 0.285}
+        color={"white"}
+      >
+        Mobile
+      </Text>
     </mesh>
   );
 }
@@ -298,7 +351,7 @@ function Video() {
     <mesh
       position={[-2, 4, 0]}
       rotation={[0, Math.PI / 2, 0]}
-      scale={[27, 10, 1]}
+      scale={[16, 6, 1]}
     >
       <planeGeometry />
       <meshBasicMaterial toneMapped={false}>

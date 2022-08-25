@@ -19,15 +19,15 @@ export const Camera = () => {
 
   const fovCamera =
     window.innerWidth < 800 && getDeviceType() === "mobile"
-      ? (window.innerWidth * 2) / 15
+      ? (window.innerWidth) / 5
       : window.innerWidth < 1000
-      ? (window.innerWidth ) / 35
-      : (window.innerWidth ) / 60;
+      ? (window.innerWidth ) / 15
+      : (window.innerWidth ) / 30;
 
   return (
     <PerspectiveCamera
       makeDefault
-      position={[30, 0, 0]}
+      position={[20, 0, 0]}
       aspect={window.innerWidth / window.innerHeight}
       target={[0, 0, 0]}
       fov={fovCamera}

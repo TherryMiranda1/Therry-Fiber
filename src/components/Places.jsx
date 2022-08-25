@@ -7,7 +7,6 @@ import {
   softShadows,
 } from "@react-three/drei";
 import Underlay from "./utils/Underlay";
-import "./Places.css";
 
 export default function Places() {
   const [{ objects, cycle }, set] = useState({ objects: [], cycle: 0 });

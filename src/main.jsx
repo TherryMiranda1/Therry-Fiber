@@ -40,17 +40,10 @@ const images = [
     position: [1.65, 0, 0.25],
     rotation: [0, -Math.PI / 2.7, 0],
     url: pexel(240526),
-    content: "Learning",
-    description: "playa",
+    content: "Frontend",
+    description: "Sombrilla y lluvia",
   },
   // { position: [2.15, 0, 1.5], rotation: [0, -Math.PI / 2.5, 0], url: pexel(911738) },
-  {
-    position: [1.9, 0, 2.75],
-    rotation: [0, -Math.PI / 2.8, 0],
-    url: pexel(1738986),
-    content: "Next Steps",
-    description: "vacio",
-  },
 ];
 
 ReactDOM.createRoot(document.getElementById("root")).render(

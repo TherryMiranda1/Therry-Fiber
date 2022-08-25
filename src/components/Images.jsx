@@ -14,13 +14,13 @@ import getUuid from "uuid-by-string";
 import { LaptopGaming } from "./utils/LaptopGaming";
 import { Phone } from "./utils/Phone";
 import { Rack } from "./utils/Rack";
-
-
+import TextScreen from "./TextScreen";
 
 const GOLDENRATIO = 1.2;
 
 export default function Images({ images, value, colors }) {
   const [content, setContent] = useState({ title: "", description: "" });
+  const [item, setItem] = useState(1);
 
   return (
     <div
@@ -29,7 +29,7 @@ export default function Images({ images, value, colors }) {
         background: value ? colors.white.background : colors.black.background,
       }}
     >
-      <div className="bg- w-screen h-1/2 ">
+      <div className=" w-screen h-1/2">
         <Canvas
           gl={{ alpha: false }}
           dpr={[1, 1.5]}
@@ -54,8 +54,8 @@ export default function Images({ images, value, colors }) {
               <MeshReflectorMaterial
                 blur={[300, 100]}
                 resolution={2048}
-                mixBlur={0.95}
-                mixStrength={10}
+                mixBlur={0.9}
+                mixStrength={value ? 10 : 60}
                 roughness={1}
                 depthScale={1.2}
                 minDepthThreshold={0.4}
@@ -67,9 +67,13 @@ export default function Images({ images, value, colors }) {
           </group>
         </Canvas>
       </div>
-      <div className="mt-8   w-screen h-1/2 z-10">
-        <h1 className=" flex text-lg">{content.title}</h1>
-        <h3>{content.description}</h3>
+      <div
+        className="mt-8"
+        style={{
+          background: value ? colors.white.background : colors.black.background,
+        }}
+      >
+        <TextScreen item={item} value={value} colors={colors} />
       </div>
     </div>
   );
