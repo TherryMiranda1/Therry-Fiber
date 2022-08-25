@@ -3,6 +3,6 @@ import { PerspectiveCamera } from '@react-three/drei'
 
 export const Camera = () => {
   return (
-    <PerspectiveCamera makeDefault position={[30,0,0]} aspect={window.innerWidth / (window.innerHeight)} target={[0,0,0]} fov={26}/>
+    <PerspectiveCamera makeDefault position={[30,0,0]} aspect={window.innerWidth / window.innerHeight} target={[0,0,0]} fov={26}/>
   )
 }
