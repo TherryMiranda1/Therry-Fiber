@@ -12,7 +12,7 @@ export function Rack(props) {
         <group
           name="Sketchfab_model"
           rotation={[-Math.PI / 2, 0, Math.PI / 0.8]}
-          scale={0.6}
+          scale={0.55}
           position={[0.1, -0.4, 0]}
         >
           <group name="ServerV2+consoleobjcleanermaterialmergergles">

@@ -53,7 +53,7 @@ const Example2 = ({ value, colors }) => {
         background: value ? colors.white.background : colors.black.background,
       }}
     >
-      <div className="w-full h-1/2 m-auto">
+      <div className="w-full h-screen m-auto">
         {showScreen ? (
           <Canvas
             shadows
@@ -72,12 +72,12 @@ const Example2 = ({ value, colors }) => {
             />
             <hemisphereLight intensity={0.5} />
             <directionalLight position={[0, 2, 5]} castShadow intensity={1} />
-            <group position={[2, -2, 0]}>
+            <group position={[2, -1.5, 0]}>
               <Video />
               <Suspense fallback={null}>
                 <group position={[0, 0.9, 0]}>
                   <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
-                    <planeGeometry args={[10, 40]} />
+                    <planeGeometry args={[40, 40]} />
                     <MeshReflectorMaterial
                       blur={[300, 100]}
                       resolution={2048}
@@ -138,7 +138,7 @@ function Sphere({ item, setItem, text }) {
     item !== 1
       ? null
       : state.camera.position.lerp({ x: 20, y: 0, z: -10 }, 0.08);
-    item === 1 ? state.camera.lookAt(0, 0, 5) : null;
+    item === 1 ? state.camera.lookAt(-5, 0, 5) : null;
   });
 
   useEffect(() => {
@@ -148,7 +148,7 @@ function Sphere({ item, setItem, text }) {
   return (
     <group
       ref={ref}
-      position={[0, 2, 5]}
+      position={[0, 1.2, 5]}
       receiveShadow
       castShadow
       onClick={() => {
@@ -198,8 +198,10 @@ function Sphere2({ item, setItem, text }) {
       ? null
       : state.camera.position.lerp({ x: 22, y: 5, z: -40 }, 0.04);
     item === 2
-      ? state.camera.setFocalLength(40) && state.camera.lookAt(0, 0, 0)
+      ?  state.camera.lookAt(0, 0, 0)
       : null;
+
+      //state.camera.setFocalLength(40)
   });
 
   useEffect(() => {
@@ -209,7 +211,7 @@ function Sphere2({ item, setItem, text }) {
   return (
     <mesh
       ref={ref}
-      position={[0, 1.5, 0]}
+      position={[0, 1.2, 0]}
       receiveShadow
       castShadow
       onClick={() => {
@@ -223,7 +225,7 @@ function Sphere2({ item, setItem, text }) {
         <Rack />
       </Suspense>
       <Text
-        position={[-2, 4, 0]}
+        position={[-2, 3.2, 0]}
         maxWidth={0.1}
         anchorX="left"
         anchorY="top"
@@ -234,7 +236,7 @@ function Sphere2({ item, setItem, text }) {
         Backend
       </Text>
       <Text
-        position={[-2, 4, 0]}
+        position={[-2, 3.2, 0]}
         maxWidth={0.1}
         anchorX="left"
         anchorY="top"
@@ -267,7 +269,7 @@ function Sphere3({ item, setItem, text }) {
   return (
     <mesh
       ref={ref}
-      position={[0, 2, -5]}
+      position={[0, 1.2, -5]}
       receiveShadow
       castShadow
       onClick={() => {
