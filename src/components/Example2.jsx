@@ -16,6 +16,7 @@ import { Camera } from "./Camera/Camera";
 import gsap from "gsap";
 import PresentationScreen from "./PresentationScreen";
 import TextScreen from "./TextScreen";
+import { getDeviceType } from "./Camera/Camera";
 
 const timeline = new gsap.timeline({
   defaults: {
@@ -37,7 +38,7 @@ const moveItem = (ref) => {
 };
 
 const Example2 = ({ value, colors }) => {
-  const [item, setItem] = useState(null);
+  const [item, setItem] = useState(1);
   const [showScreen, setShowScreen] = useState(false);
 
   useEffect(() => {
@@ -134,7 +135,9 @@ function Sphere({ item, setItem, text }) {
   useCursor(active);
   useFrame((state) => {
     state.camera.position.lerp({ x: 25, y: 5, z: 10 }, 0.08);
-    state.camera.setFocalLength(66);
+    window.innerWidth < 800 && getDeviceType() === "mobile"
+      ? state.camera.setFocalLength(35)
+      : state.camera.setFocalLength(66);
     item !== 1
       ? null
       : state.camera.position.lerp({ x: 20, y: 0, z: -10 }, 0.08);
@@ -197,11 +200,9 @@ function Sphere2({ item, setItem, text }) {
     item !== 2
       ? null
       : state.camera.position.lerp({ x: 22, y: 5, z: -40 }, 0.04);
-    item === 2
-      ?  state.camera.lookAt(0, 0, 0)
-      : null;
+    item === 2 ? state.camera.lookAt(0, 0, 0) : null;
 
-      //state.camera.setFocalLength(40)
+    //state.camera.setFocalLength(40)
   });
 
   useEffect(() => {

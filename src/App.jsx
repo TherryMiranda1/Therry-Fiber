@@ -39,7 +39,10 @@ export default function App({ images }) {
         /></div>
         
 
-      <div className="w-screen h-screen">
+      <div className="w-screen h-screen "
+      style={{
+        background: value ? colors.white.background : colors.black.background,
+      }}>
         <Suspense fallback={null}>
           {page === "Images" ? (
             <Images images={images} colors={colors} value={value} />

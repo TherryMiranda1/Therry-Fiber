@@ -76,3 +76,42 @@ button:focus-visible {
 .screen ::-webkit-scrollbar {
   width: 0;
 }
+
+.wrapper{
+  position: relative;
+  display: flex;
+  width:90%;
+  animation: scroll 40s linear infinite;
+}
+.wrapper:hover{
+  animation-play-state: paused;
+}
+
+.wrapper::-webkit-scrollbar {
+  width: 30em;
+  cursor: pointer;
+}
+
+.slideContainer{
+  perspective: 100px;
+}
+
+
+.image{
+  width: 40;
+  margin: auto;
+  height: 110px;
+  transition: transform 1s;
+  
+}
+.image:hover{
+  transform: translateZ(15px);
+}
+@keyframes scroll{
+  0%{
+    transform:translateX(0)
+  }
+  100%{
+    transform: translateX(calc(-250px*9));
+  }
+}
